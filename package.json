@@ -1,0 +1,10 @@
+{
+    "name": "petorpass",
+    "version": "1.0.0",
+    "scripts": {
+        "dev": "http-server"
+    },
+    "dependencies": {
+        "http-server": "^14.1.1"
+    }
+}
