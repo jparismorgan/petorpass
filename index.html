@@ -75,7 +75,7 @@
 
         // Update the src attribute of the <img> tag with the random image
         var imageElement = document.querySelector('.image-container img');
-        imageElement.src = '/assets/' + randomImageNumber + '.png';
+        imageElement.src = `https://images.petorpass.ai/${imageNumber}.png`;
 
         // Update the current imageNumber
         imageNumber = randomImageNumber;
@@ -88,7 +88,7 @@
 
         // Create the <img> element programmatically
         var imageElement = document.createElement('img');
-        imageElement.src = '/assets/' + imageNumber + '.png';
+        imageElement.src = `https://images.petorpass.ai/${imageNumber}.png`
         imageElement.alt = 'Image to rate';
 
         // Append the <img> element to the .image-container div
