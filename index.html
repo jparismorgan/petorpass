@@ -1,31 +1,12 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> 
     <title>petorpassAI</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%2210 0 100 100%22><text y=%22.90em%22 font-size=%2290%22>🐶</text></svg>">
     <style type="text/css">
-        .save-image-button {
-            background-color: fafafa;
-            border: none;
-            border-radius: 5px;
-            color: #000;
-            cursor: pointer;
-            display: inline-block;
-            font-size: 14px;
-            margin: 4px;
-            padding: 12px;
-            text-align: center;
-            -webkit-text-decoration: none;
-            text-decoration: none;
-            transition-duration: .4s
-        }
-
-        .save-image-button:hover {
-            background-color: #fff;
-            border: 2px solid #e8e6e6;
-            border-radius: 5px;
-            color: #000
+        .heading {
+            margin-bottom: 0px;
         }
 
         .rating-bar {
@@ -57,13 +38,6 @@
             filter: brightness(.8)
         }
 
-        @media (max-width:600px) {
-            .image-container img {
-                max-width: 100%;
-                width: 100%
-            }
-        }
-    
         body,
         html {
             margin: 0;
@@ -71,50 +45,31 @@
         }
 
         .image-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
             align-items: center;
+            max-height: calc(100vh - 350px);
+        }
+
+        .image-container img {
+            max-width: 100%;
+            max-height: 100%;
             border: 1px solid #000;
             border-radius: 5px;
-            display: flex;
-            flex-direction: column;
-            height: auto;
-            justify-content: center;
-            overflow: hidden;
-            width: auto;
-            margin: 10px;
-            padding: 0;
-        }
-
-        .image-container,
-        .images-grid {
-            display: flex;
-            justify-content: center
-        }
-
-        .images-grid {
-            flex-wrap: wrap
-        }
-
-        @media (max-width:600px) {
-            .image-container img {
-                max-width: 100%;
-                width: 100%
-            }
-        }
-
-        @media (min-width:601px) {
-            .image-container {
-                flex-basis: calc(33.33% - 20px)
-            }
+            box-sizing: border-box; /* Include the border in the image dimensions */
         }
     </style>
 </head>
 
 <script>
-    const MAX_IMAGE_NUMBER = 40;
+    const MAX_IMAGE_NUMBER = 92;
     var imageNumber;
 
     // Function to change the image source
-    function changeImage() {
+    function changeImage(e) {
+        e.preventDefault()
+
         // Generate a random image number between 1 and MAX_IMAGE_NUMBER
         var randomImageNumber = Math.floor(Math.random() * MAX_IMAGE_NUMBER) + 1;
 
@@ -135,7 +90,6 @@
         var imageElement = document.createElement('img');
         imageElement.src = '/assets/' + imageNumber + '.png';
         imageElement.alt = 'Image to rate';
-        imageElement.style.height = '500px';
 
         // Append the <img> element to the .image-container div
         document.querySelector('.image-container').appendChild(imageElement);
@@ -143,20 +97,18 @@
 </script>
 
 <body>
-    <div>
-        <div style="display:flex;flex-direction:column;align-items:center;padding-top:0">
-            <h1><span style="color:#0ac539">pet</span><span style="color:#000">or</span><span style="color:#c50a0a">pass</span>.ai</h1>
-            <h3>The more you rate, the cuter it gets!</h3>
-            <div class="image-container"></div> 
-            <div class="rating-bar">
-                <button class="rating-button-smash" onclick="changeImage()">Pet</button>
-                <span style="width:50px;display:inline-block"></span>
-                <button class="rating-button-pass" onclick="changeImage()">Pass</button>
-            </div>
-            <footer>
-                <h6 style="color:#d3d3d3; margin-bottom: 0px;">All images are 100% AI-generated | <a href="https://github.com/jparismorgan/petorpass" target="_blank">GitHub</a></h6>
-            </footer>
+    <div style="display:flex; flex-direction:column; align-items:center; padding-top:0; height: 100%; margin-left: 8px; margin-right: 8px;">
+        <h1 class="heading"><span style="color:#0ac539">pet</span><span style="color:#000">or</span><span style="color:#c50a0a">pass</span>.ai</h1>
+        <h3>The more you rate, the cuter it gets!</h3>
+        <div class="image-container"></div> 
+        <div class="rating-bar">
+            <button class="rating-button-smash" onclick="changeImage(event)">Pet</button>
+            <span style="width:50px;display:inline-block"></span>
+            <button class="rating-button-pass" onclick="changeImage(event)">Pass</button>
         </div>
+        <footer>
+            <h6 style="color:#d3d3d3; margin-bottom: 0px;">All images are 100% AI-generated | <a href="https://github.com/jparismorgan/petorpass" target="_blank">GitHub</a></h6>
+        </footer>
     </div>
 </body>
 
