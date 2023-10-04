@@ -87,35 +87,76 @@
 
 <script>
     const MAX_IMAGE_NUMBER = 92;
-    var imageNumber;
+    
+    function shuffle(array) {
+        let currentIndex = array.length,  randomIndex;
+
+        // While there remain elements to shuffle.
+        while (currentIndex > 0) {
+
+            // Pick a remaining element.
+            randomIndex = Math.floor(Math.random() * currentIndex);
+            currentIndex--;
+
+            // And swap it with the current element.
+            [array[currentIndex], array[randomIndex]] = [
+            array[randomIndex], array[currentIndex]];
+        }
+
+        return array;
+    }
+
+    const IMAGE_NUMBERS = []
+    for (let i = 1; i <= MAX_IMAGE_NUMBER; i++) {
+        IMAGE_NUMBERS.push(i);
+    }
+    shuffle(IMAGE_NUMBERS)
+
+    var imageIndex = 0;
+    var preloadedIndices = [];
 
     // Function to change the image source
     function changeImage(e) {
         e.preventDefault()
 
-        // Generate a random image number between 1 and MAX_IMAGE_NUMBER
-        var randomImageNumber = Math.floor(Math.random() * MAX_IMAGE_NUMBER) + 1;
+        // Change to a new image.
+        imageIndex += 1
+
+        // Preload future images.
+        preloadNextImages(8);
 
         // Update the src attribute of the <img> tag with the random image
         var imageElement = document.querySelector('.image-container img');
-        imageElement.src = `https://images.petorpass.ai/${imageNumber}.png`;
+        imageElement.src = `https://images.petorpass.ai/${IMAGE_NUMBERS[imageIndex]}.png`;
+    }
 
-        // Update the current imageNumber
-        imageNumber = randomImageNumber;
+    // Function to preload the next 'count' images
+    function preloadNextImages(count) {
+        for (var i = 0; i < count; i++) {
+            var nextImageIndex = IMAGE_NUMBERS[imageIndex + i + 1];
+            if (nextImageIndex !== undefined && !preloadedIndices.includes(nextImageIndex)) {
+                // Add the preloaded image index to the array
+                preloadedIndices.push(nextImageIndex);
+                
+                // Preload the image
+                var preloadImage = new Image();
+                preloadImage.src = `https://images.petorpass.ai/${nextImageIndex}.png`;
+            }
+        }
     }
 
     // Initialize the imageNumber and create the <img> element on page load
     window.onload = function () {
-        // Generate a random image number between 1 and MAX_IMAGE_NUMBER
-        imageNumber = Math.floor(Math.random() * MAX_IMAGE_NUMBER) + 1;
-
         // Create the <img> element programmatically
         var imageElement = document.createElement('img');
-        imageElement.src = `https://images.petorpass.ai/${imageNumber}.png`
+        imageElement.src = `https://images.petorpass.ai/${IMAGE_NUMBERS[imageIndex]}.png`
         imageElement.alt = 'Image to rate';
 
         // Append the <img> element to the .image-container div
         document.querySelector('.image-container').appendChild(imageElement);
+
+        // Preload future images.
+        preloadNextImages(1);
     };
 </script>
 
